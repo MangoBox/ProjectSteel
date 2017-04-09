@@ -109,6 +109,7 @@ public class MapGenerator : MonoBehaviour {
 	MapData GenerateMapData(Vector2 centre) {
         //We are able to grab the generation settings from a non-static class due to the target variable being static. Ha!
         GenerationSettings genSettings = MainMenuController.finalGenerationSettings;
+        print(genSettings.lacunarity + " " + genSettings.noiseScale + " " + genSettings.octaves + " " + genSettings.seed);
 
         //Now we can pop genSettings into the Noise.GenerateNoiseMap function!
         float[,] noiseMap = Noise.GenerateNoiseMap(mapChunkSize + 2, mapChunkSize + 2, genSettings.seed, genSettings.noiseScale, genSettings.octaves, genSettings.persistance, genSettings.lacunarity, centre + offset, normalizeMode);

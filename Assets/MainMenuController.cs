@@ -78,20 +78,6 @@ public class MainMenuController : MonoBehaviour {
 
     }
 
-    public GenerationSettings returnGenerationSettings()
-    {
-        GenerationSettings returnSettings;
-        returnSettings.lacunarity = lacunaritySlider.value;
-        returnSettings.noiseScale = noiseSlider.value;
-        returnSettings.persistance = persistanceSlider.value;
-        //Simply converts the string into a integer hashcode.
-        returnSettings.seed = seedField.text.GetHashCode();
-        //An explicit cast is fine considering the slider is forced to use whole numbers.
-        returnSettings.octaves = (int) octavesSlider.value;
-        //Returns the settings.
-        return returnSettings;
-    }
-
     //Very similar to the method above, however it returns the default values instead.
     public GenerationSettings returnDefaultGenerationSettings()
     {
@@ -129,7 +115,26 @@ public class MainMenuController : MonoBehaviour {
         setSliderValues(finalGenerationSettings);
     }
 
+    //Applies the parameters to genSettings
+    public void modifyGenerationSettings(GenerationSettings genSettings, float lacunarity, float persistance, float noiseScale, int octaves, int seed)
+    {
+        genSettings.lacunarity = lacunarity;
+        genSettings.noiseScale = noiseScale;
+        genSettings.octaves = octaves;
+        genSettings.persistance = persistance;
+        genSettings.noiseScale = noiseScale;
+        genSettings.seed = seed;
+    }
 
+    //An overload for the method above, not resetting the seed for various uses.
+    public void modifyGenerationSettings(GenerationSettings genSettings, float lacunarity, float persistance, float noiseScale, int octaves)
+    {
+        genSettings.lacunarity = lacunarity;
+        genSettings.noiseScale = noiseScale;
+        genSettings.octaves = octaves;
+        genSettings.noiseScale = noiseScale;
+        genSettings.persistance = persistance;
+    }
 
     //Applies the generation settings to the fields.
     public void applyGenerationSettingsToFields(GenerationSettings genSettings)
@@ -168,6 +173,12 @@ public class MainMenuController : MonoBehaviour {
         {
             finalGenerationSettings.seed = System.DateTime.Now.Millisecond;
         }
+
+
+        finalGenerationSettings.lacunarity = lacunaritySlider.value;
+        finalGenerationSettings.noiseScale = noiseSlider.value;
+        finalGenerationSettings.octaves = (int) octavesSlider.value;
+        finalGenerationSettings.persistance = persistanceSlider.value;
         Application.LoadLevel("ProceduralWorld");
     }
 
@@ -216,7 +227,6 @@ public class MainMenuController : MonoBehaviour {
 //Its worth noting that static objects can be passed between levels.
 public struct GenerationSettings
 {
-    //TODO: Check if containing variables need to be defined as static in addition to struct definition.
     public float lacunarity;
     public float persistance;
     public float noiseScale;
