@@ -27,7 +27,7 @@ public class PauseMenuController : MonoBehaviour {
         pauseScreen.SetActive(false);
         optionsScreen.SetActive(false);
 
-        tempResData = new ResolutionData(6, Screen.fullScreen);
+        tempResData = new ResolutionData(3, Screen.fullScreen);
         
         ResolutionData resData = new ResolutionData(6, true);
         resData.applySettings();
@@ -76,7 +76,6 @@ public class PauseMenuController : MonoBehaviour {
     {
         tempResData.nextResolution();
         resolutionText.text = tempResData.displayResName;
-        print(tempResData.resIndex);
 
     }
 
@@ -121,13 +120,31 @@ public class ResolutionData
     //Cycles to the previous resolution.
     public void previousResolution()
     {
-        resIndex = resIndex <= 0 ? resolutionArray.Length - 1 : resIndex--;
+        if (resIndex <= 0)
+        {
+            resIndex = resolutionArray.Length - 1;
+        }
+        else
+        {
+            resIndex--;
+        }
+        //resIndex = resIndex <= 0 ? resolutionArray.Length - 1 : resIndex--;
+        displayResName = resolutionArray[resIndex];
     }
 
     //Cycles to the next resolution.
     public void nextResolution()
     {
-        resIndex = resIndex >= resolutionArray.Length - 1 ? 0 : resIndex++;
+        if (resIndex >= (resolutionArray.Length - 1))
+        {
+            resIndex = 0;
+        }
+        else
+        {
+            resIndex++;
+        }
+        //resIndex = resIndex >= resolutionArray.Length - 1 ? 0 : resIndex++;
+        displayResName = resolutionArray[resIndex];
     }
 
 }

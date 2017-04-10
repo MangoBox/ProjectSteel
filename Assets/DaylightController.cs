@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class DaylightController : MonoBehaviour {
@@ -12,6 +13,8 @@ public class DaylightController : MonoBehaviour {
     //The from and to rotations.
     Quaternion dawnRotation;
     Quaternion nightRotation;
+
+    public Image barObject;
 
     public SunRotation startRot;
     public SunRotation destRot;
@@ -40,9 +43,11 @@ public class DaylightController : MonoBehaviour {
             float rotY = Mathf.Lerp(startRot.pitchRotation, destRot.pitchRotation, value);
             float rotZ = Mathf.Lerp(startRot.tiltRotation, destRot.tiltRotation, value);
 
-            light.transform.rotation = new Quaternion(rotX, rotY, rotZ, 0);
+            light.transform.rotation = Quaternion.Euler(rotX, rotY, rotZ);
+            print(rotX + " " + rotY + " " + rotZ);
 
             currentTime = value;
+            barObject.fillAmount = currentTime;
     }
 
     //Simply adds the current time to the parameter amount.
